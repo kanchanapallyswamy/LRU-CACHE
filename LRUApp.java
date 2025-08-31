@@ -6,7 +6,7 @@ public class LRUApp {
 
         System.out.println("Enter cache capacity:");
         int capacity = sc.nextInt();
-        sc.nextLine(); // consume newline
+        sc.nextLine(); 
 
         LRUCache cache = new LRUCache(capacity);
 
@@ -89,8 +89,6 @@ class LRUCache {
 
         head.next = tail;
         tail.prev = head;
-        head.prev = tail;
-        tail.next = head;
     }
 
     private void remove(Node node) {
@@ -99,9 +97,10 @@ class LRUCache {
     }
 
     private void insertAtFront(Node node) {
-        node.next = head.next;
-        node.prev = head;
-        head.next.prev = node;
+        Node temp = head.next;
+        node.next = temp;
+        node .prev = head;
+        temp.prev = node;
         head.next = node;
     }
 
@@ -118,6 +117,7 @@ class LRUCache {
     public void put(int key, int value) {
         if (mp.containsKey(key)) {
             remove(mp.get(key));
+            mp.remove(key);
         }
 
         if (mp.size() == capacity) {
